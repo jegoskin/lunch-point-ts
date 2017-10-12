@@ -1,23 +1,17 @@
-export const log = (message: string): IAction => ({
+export const log = (message: string): IAction<string> => ({
 	type: 'LOG',
-	payload: {
-		message
-	}
+	payload: message
 })
 
-export const logAsync = (message: string): FActionAsync => (dispatch => {
+export const logAsync = (message: string): FActionAsync<string> => (dispatch => {
 	dispatch({
 		type: 'LOG',
-		payload: {
-			message: 'async log in 3s'
-		}
+		payload: 'async log in 3s'
 	});
 	setTimeout(() => {
 		dispatch({
 			type: 'LOG',
-			payload: {
-				message
-			}
+			payload: message
 		})
 	}, 3000)
 })

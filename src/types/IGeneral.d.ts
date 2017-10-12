@@ -1,16 +1,15 @@
-interface IAction {
+interface IAction<T> {
 	type: string,
-	payload: {}
+	payload: T | undefined
 }
 
-type FActionAsync = (dispatch: FDispatch) => void;
+type FActionAsync<T> = (dispatch: FDispatch<T>) => void;
 
-type FDispatch = (action: IAction) => void;
+type FDispatch<T> = (action: IAction<T> | FActionAsync<any>) => void;
 
-//Application State
-interface IAppState {
-	logs?: {
-		list: object[],
-		lastLog: object
+interface IHistory {
+	location: {
+		hash: string;
+		pathname: string;
 	}
 }

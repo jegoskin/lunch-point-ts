@@ -3,6 +3,10 @@ import { connect } from 'react-redux';
 import { Route } from 'react-router-dom'
 import { ConnectedRouter, push } from 'react-router-redux';
 import { log, logAsync } from '../../actions/log';
+import Home from '../Home/Home';
+import Ingredient from '../Ingredient/Ingredient'
+import MealDetail from '../Detail/MealDetail';
+import AddMeal from	'../Add/AddMeal'
 
 import './Root.css';
 
@@ -24,10 +28,6 @@ class Root extends React.Component<IRootProps, IRootState> {
 			drawer: false
 		}
 	}
-	componentDidMount() {
-		this.props.log('Root mount.');
-		this.props.logAsync('Root mount asynch.');
-	}
 	toogleDrawer = (show?: boolean) => {
 		if (show) {
 			this.setState({
@@ -40,24 +40,26 @@ class Root extends React.Component<IRootProps, IRootState> {
 		}
 	}
 	render() {
-		console.log(this.props);
 		return (
 			<ConnectedRouter history={this.props.history}>
 				<div>
 					<div>
-						<AppBar title="Blank" onTitleTouchTap={() => this.props.navigate('/')} onLeftIconButtonTouchTap={() => this.toogleDrawer()} />
+						<AppBar title="Lunch Time" onTitleTouchTap={() => this.props.navigate('/')} onLeftIconButtonTouchTap={() => this.toogleDrawer()} />
 						<Drawer
 							docked={false}
 							width={300}
 							open={this.state.drawer}
 							onRequestChange={(open) => this.toogleDrawer(open)}
 						>
-							<AppBar title="Blank" onLeftIconButtonTouchTap={() => this.toogleDrawer()} />
-							<MenuItem primaryText="About" onClick={() => {this.toogleDrawer(false); this.props.navigate('/about')}}/>
+							<AppBar title="Lunch Time" onLeftIconButtonTouchTap={() => this.toogleDrawer()} />
+							<MenuItem primaryText="Home" onClick={() => {this.toogleDrawer(false); this.props.navigate('/')}}/>
+							<MenuItem primaryText="Ingredient" onClick={() => {this.toogleDrawer(false); this.props.navigate('/ingredient/')}}/>
 						</Drawer>
 					</div>
-					<Route exact path="/" component={() => <h1>Home</h1>}/>
-					<Route exact path="/about" component={() => <h1>About</h1>}/>
+					<Route exact path="/" component={Home}/>
+					<Route exact path="/ingredient/" component={Ingredient}/>
+					<Route exact path="/meal/detail/:id" component={MealDetail}/>
+					<Route exact path="/meal/add/" component={AddMeal}/>
 				</div>
 			</ConnectedRouter>
 		);
